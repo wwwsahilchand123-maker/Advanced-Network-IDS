@@ -1,0 +1,45 @@
+rule_id: "SCAN_001"
+name: "TCP SYN Port Scan Detection"
+description: "Detects potential port scanning activity based on SYN packet patterns"
+category: "reconnaissance"
+severity: "HIGH"
+enabled: true
+
+mitre_attack:
+  tactic: "Discovery"
+  technique: "T1046"
+  technique_name: "Network Service Scanning"
+
+detection_logic:
+  type: "threshold"
+  conditions:
+    - metric: "unique_dst_ports_per_src"
+      threshold: 25
+      time_window: 30
+    - metric: "syn_to_ack_ratio"
+      threshold: 0.8
+    - metric: "failed_connection_ratio"
+      threshold: 0.7
+
+evidence_collection:
+  - src_ip
+  - dst_ip
+  - contacted_ports
+  - packet_timestamps
+  - tcp_flags
+
+confidence_calculation:
+  base: 70
+  modifiers:
+    - condition: "ports_contacted > 50"
+      adjustment: 15
+    - condition: "sequential_ports"
+      adjustment: 10
+    - condition: "syn_only_packets > 90%"
+      adjustment: 5
+
+response:
+  alert: true
+  block: false
+  correlate: true
+  cooldown: 300

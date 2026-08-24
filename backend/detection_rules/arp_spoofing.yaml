@@ -1,0 +1,25 @@
+rule_id: "ARP_001"
+name: "ARP Spoofing Detection"
+description: "Detects ARP spoofing/poisoning attacks based on IP-MAC binding changes"
+category: "man_in_the_middle"
+severity: "CRITICAL"
+enabled: true
+
+mitre_attack:
+  tactic: "Credential Access"
+  technique: "T1557.002"
+  technique_name: "ARP Cache Poisoning"
+
+detection_logic:
+  type: "state_change"
+  conditions:
+    - metric: "ip_mac_binding_change"
+      threshold: 1
+    - metric: "mac_address_change_for_same_ip"
+      immediate: true
+
+response:
+  alert: true
+  block: false
+  correlate: true
+  cooldown: 60

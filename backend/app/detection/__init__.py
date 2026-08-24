@@ -1,0 +1,3 @@
+"""
+Detection engine module initialization
+"""

@@ -1,0 +1,3 @@
+"""
+Event correlation module initialization
+"""

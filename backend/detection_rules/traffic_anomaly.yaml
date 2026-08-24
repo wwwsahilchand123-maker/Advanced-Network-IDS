@@ -1,0 +1,32 @@
+rule_id: "ANOMALY_001"
+name: "Traffic Volume Spike"
+description: "Detects unusual traffic volume spikes based on baseline"
+category: "anomaly"
+severity: "MEDIUM"
+enabled: true
+
+mitre_attack:
+  tactic: "Exfiltration"
+  technique: "T1041"
+  technique_name: "Exfiltration Over C2 Channel"
+
+detection_logic:
+  type: "statistical"
+  conditions:
+    - metric: "packet_rate_deviation"
+      threshold: 3.0
+      unit: "standard_deviations"
+    - metric: "byte_rate_deviation"
+      threshold: 3.0
+      unit: "standard_deviations"
+
+baseline:
+  window: 300
+  min_samples: 10
+  update_interval: 300
+
+response:
+  alert: true
+  block: false
+  correlate: true
+  cooldown: 600

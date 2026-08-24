@@ -1,0 +1,38 @@
+{
+  "project": "Advanced-Network-IDS",
+  "generated_file_entries": 127,
+  "source_phase_files_preserved": 13,
+  "duplicate_paths": {
+    "backend/app/main.py": [
+      "Pasted markdown (3).md",
+      "Pasted markdown (4).md",
+      "Pasted markdown (8).md",
+      "Pasted markdown (9).md"
+    ],
+    "README.md": [
+      "Pasted markdown (3).md",
+      "Pasted markdown (9).md",
+      "Pasted markdown (13).md"
+    ],
+    "backend/app/services/capture_service.py": [
+      "Pasted markdown (4).md",
+      "Pasted markdown (6).md"
+    ],
+    "backend/app/services/detection_service.py": [
+      "Pasted markdown (6).md",
+      "Pasted markdown (7).md",
+      "Pasted markdown (9).md"
+    ],
+    "frontend/src/App.tsx": [
+      "Pasted markdown (10).md",
+      "Pasted markdown (12).md"
+    ]
+  },
+  "final_source_for_duplicate_paths": {
+    "backend/app/main.py": "Pasted markdown (9).md",
+    "README.md": "Pasted markdown (13).md",
+    "backend/app/services/capture_service.py": "Pasted markdown (6).md",
+    "backend/app/services/detection_service.py": "Pasted markdown (9).md",
+    "frontend/src/App.tsx": "Pasted markdown (12).md"
+  }
+}

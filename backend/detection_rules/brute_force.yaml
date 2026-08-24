@@ -1,0 +1,39 @@
+rule_id: "BRUTE_001"
+name: "Brute Force Authentication Attempt"
+description: "Detects repeated authentication attempts indicating brute force attack"
+category: "credential_access"
+severity: "HIGH"
+enabled: true
+
+mitre_attack:
+  tactic: "Credential Access"
+  technique: "T1110"
+  technique_name: "Brute Force"
+
+detection_logic:
+  type: "threshold"
+  conditions:
+    - metric: "connection_attempts_per_service"
+      threshold: 10
+      time_window: 60
+    - metric: "burst_attempts"
+      threshold: 5
+      time_window: 10
+
+monitored_services:
+  - port: 22
+    name: "SSH"
+  - port: 21
+    name: "FTP"
+  - port: 3389
+    name: "RDP"
+  - port: 80
+    name: "HTTP"
+  - port: 443
+    name: "HTTPS"
+
+response:
+  alert: true
+  block: false
+  correlate: true
+  cooldown: 300

@@ -1,0 +1,56 @@
+rule_id: "SUSP_001"
+name: "Connection to Suspicious Port"
+description: "Detects connections to ports commonly used by malware"
+category: "command_and_control"
+severity: "HIGH"
+enabled: true
+
+mitre_attack:
+  tactic: "Command and Control"
+  technique: "T1071"
+  technique_name: "Application Layer Protocol"
+
+detection_logic:
+  type: "port_match"
+  suspicious_ports:
+    - 31337
+    - 12345
+    - 27374
+    - 4444
+    - 5555
+
+response:
+  alert: true
+  block: false
+  correlate: true
+  cooldown: 300
+
+---
+
+rule_id: "SUSP_002"
+name: "Suspicious TCP Flags"
+description: "Detects unusual TCP flag combinations used in scanning"
+category: "reconnaissance"
+severity: "HIGH"
+enabled: true
+
+mitre_attack:
+  tactic: "Discovery"
+  technique: "T1046"
+  technique_name: "Network Service Scanning"
+
+detection_logic:
+  type: "flag_pattern"
+  patterns:
+    - name: "XMAS scan"
+      flags: ["FIN", "URG", "PSH"]
+    - name: "NULL scan"
+      flags: []
+    - name: "FIN scan"
+      flags: ["FIN"]
+
+response:
+  alert: true
+  block: false
+  correlate: true
+  cooldown: 300

@@ -1,0 +1,3 @@
+"""
+WebSocket module initialization
+"""

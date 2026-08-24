@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Environment / secrets
+.env
+!.env.example
+
+# Runtime
+backend/logs/*
+!backend/logs/.gitkeep
+backend/uploads/*
+!backend/uploads/pcaps/
+backend/uploads/pcaps/*
+!backend/uploads/pcaps/.gitkeep
+backend/reports/*
+!backend/reports/.gitkeep
+*.db
+*.sqlite
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
