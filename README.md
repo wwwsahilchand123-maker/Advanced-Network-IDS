@@ -1,79 +1,84 @@
-# Advanced Network Intrusion Detection System (IDS)
+<div align="center">
 
-A Python/FastAPI-based network intrusion detection and monitoring platform for learning and SOC-style security workflows.
+<img src="assets/README-banner.svg" width="100%" alt="Advanced Network IDS" />
 
-> **Project status:** Active development. Some production-oriented features described below are implemented while others are still being hardened. This project is intended for authorized networks and lab environments.
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-Dashboard-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Scapy](https://img.shields.io/badge/Scapy-Packets-00D9FF?style=for-the-badge)](https://scapy.net/)
 
-## Key Features
+### 🛰️ Telemetry → Detection → Risk → Alert
 
-- Real-time packet capture and flow tracking with Scapy
-- Port-scan, brute-force, ARP-spoofing, DNS and traffic-anomaly detection
-- Event correlation and incident/attack-chain analysis
-- Explainable risk scoring
-- MITRE ATT&CK technique mapping
-- JWT authentication and role-based access control
-- REST API with FastAPI
-- WebSocket event streaming
-- React dashboard for alerts, incidents and network activity
-- SQLite support for local development; PostgreSQL for deployment
+**A Python/FastAPI network intrusion detection and monitoring platform for SOC-style security workflows.**
 
-## Architecture
+</div>
 
-```text
-Network Interface
-       |
-       v
-Packet Capture -> Packet Parser -> Flow Tracker
-       |
-       +--> Detection Rules
-       |
-       v
-Correlation Engine -> Risk Scoring -> Database
-       |
-       +--> FastAPI REST API
-       +--> WebSocket Event Stream
-       +--> React Dashboard
+---
+
+## 🧠 Overview
+
+Advanced Network IDS is designed for learning and authorized lab environments. It combines packet capture, flow tracking, detection rules, event correlation, risk scoring and a React security dashboard.
+
+> **Project status:** Active development. Some production-oriented capabilities are still being hardened.
+
+## ✨ Detection & SOC Capabilities
+
+- 📡 Real-time packet capture and flow tracking with Scapy
+- 🔎 Port-scan, brute-force, ARP-spoofing, DNS and traffic-anomaly detection
+- 🧩 Event correlation and incident / attack-chain analysis
+- 📊 Explainable 0–100 risk scoring
+- 🎯 MITRE ATT&CK technique mapping
+- 🔐 JWT authentication and role-based access control
+- ⚡ FastAPI REST API + WebSocket event streaming
+- 🖥️ React dashboard for alerts, incidents and network activity
+- 🗄️ SQLite for local development / PostgreSQL for deployment
+
+## ⚡ Architecture
+
+```mermaid
+flowchart LR
+ A[Network Interface] --> B[Packet Capture]
+ B --> C[Packet Parser]
+ C --> D[Flow Tracker]
+ D --> E[Detection Rules]
+ E --> F[Correlation Engine]
+ F --> G[Risk Scoring]
+ G --> H[(Database)]
+ G --> I[FastAPI]
+ I --> J[WebSocket]
+ I --> K[React SOC Dashboard]
 ```
 
-## Technology Stack
+## 🧰 Tech Stack
 
-**Backend:** Python 3.11+, FastAPI, SQLAlchemy, Scapy, Alembic, WebSocket
+| Layer | Technology |
+|---|---|
+| Backend | Python 3.11+, FastAPI, SQLAlchemy, Scapy, Alembic |
+| Frontend | React 18, TypeScript, Vite, Tailwind CSS, Recharts, Zustand, Axios |
+| Database | SQLite / PostgreSQL |
+| Security | JWT, RBAC, MITRE ATT&CK mapping |
 
-**Frontend:** React 18, TypeScript, Vite, Tailwind CSS, Recharts, Zustand, Axios
+## 🚀 Quick Start
 
-**Database:** SQLite (development) / PostgreSQL (deployment)
-
-## Quick Start
-
-### 1. Backend
+### Backend
 
 ```bash
 git clone https://github.com/wwwsahilchand123-maker/Advanced-Network-IDS.git
 cd Advanced-Network-IDS/backend
 python -m venv venv
-
-# Windows
-venv\Scripts\activate
-
-# Linux/macOS
-# source venv/bin/activate
-
-pip install -r requirements.txt
 ```
 
-Copy the example environment file to `.env` and set your own values. **Do not commit `.env`.**
+Windows:
+```bash
+venv\Scripts\activate
+```
 
 ```bash
+pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-API documentation:
-
-- http://localhost:8000/api/v1/docs
-- http://localhost:8000/api/v1/redoc
-- http://localhost:8000/health
-
-### 2. Frontend
+### Frontend
 
 ```bash
 cd ../frontend
@@ -81,58 +86,23 @@ npm install
 npm run dev
 ```
 
-The Vite development server normally runs on port 5173.
+API docs normally run at `http://localhost:8000/api/v1/docs` and the Vite frontend at `http://localhost:5173`.
 
-## Security Configuration
+## 🔍 Detection Modules
 
-Before using the system beyond a local development environment:
+`Port Scan` · `Brute Force` · `ARP Spoofing` · `DNS Anomaly` · `Traffic Anomaly` · `Suspicious Traffic` · `Event Correlation`
 
-- Set a strong random `SECRET_KEY` in `.env`.
-- Set a unique `ADMIN_PASSWORD`.
-- Set `DEBUG=False`.
-- Restrict `BACKEND_CORS_ORIGINS` to trusted frontend origins.
-- Use PostgreSQL for multi-user/production deployments.
-- Keep API keys and credentials out of Git.
-- Run packet capture only on networks you own or are explicitly authorized to monitor.
+Detection thresholds should be tuned to the monitored environment. Detection results are indicators and should be investigated before response actions.
 
-Example `.env` values:
-
-```env
-ENVIRONMENT=development
-DEBUG=False
-SECRET_KEY=<generate-a-long-random-secret>
-ADMIN_USERNAME=admin
-ADMIN_EMAIL=admin@ids.local
-ADMIN_PASSWORD=<set-a-strong-password>
-DATABASE_URL=sqlite:///./ids.db
-```
-
-## Detection Modules
-
-The project includes modules for:
-
-- Port scan detection
-- Brute-force detection
-- ARP spoofing detection
-- DNS anomaly detection
-- Traffic anomaly detection
-- Suspicious traffic pattern detection
-- Event correlation and incident construction
-
-Detection thresholds should be tuned against the network being monitored. Detection results are indicators, not proof of malicious activity, and should be investigated before response actions.
-
-## Testing
-
-Run backend tests from the `backend` directory:
+## 🧪 Testing
 
 ```bash
+cd backend
 pytest
 pytest --cov=app --cov-report=html
 ```
 
-For manual testing and lab scenarios, see `TESTING_GUIDE.md`.
-
-## Project Structure
+## 📁 Project Structure
 
 ```text
 Advanced-Network-IDS/
@@ -141,7 +111,6 @@ Advanced-Network-IDS/
 │   │   ├── api/
 │   │   ├── capture/
 │   │   ├── correlation/
-│   │   ├── core/
 │   │   ├── detection/
 │   │   ├── models/
 │   │   ├── services/
@@ -155,10 +124,20 @@ Advanced-Network-IDS/
 └── README.md
 ```
 
-## Limitations
+## 🔐 Security
 
-This is a portfolio/educational IDS rather than a replacement for mature commercial or open-source network security platforms. Detection quality depends on traffic visibility, thresholds, feature extraction and test coverage. Performance figures should be treated as environment-dependent unless reproduced with the included tests.
+Keep secrets in `.env`, use strong credentials, restrict CORS, and monitor only networks you own or are explicitly authorized to monitor.
 
-## License
+## ⚠️ Disclaimer
 
-MIT License. See `LICENSE`.
+This is a portfolio/educational IDS. Do not deploy it as a replacement for mature security platforms without independent validation and hardening. Use packet capture only on authorized networks.
+
+---
+
+<div align="center">
+
+### 🛡️ Detect the signal. Understand the threat. Defend the network.
+
+**Built by Sahil Chand**
+
+</div>
