@@ -2,12 +2,14 @@
 
 <img src="assets/README-banner.svg" width="100%" alt="Advanced Network IDS" />
 
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&pause=850&color=42E8A3&center=true&vCenter=true&width=850&lines=TELEMETRY+%E2%86%92+DETECTION+%E2%86%92+RISK+%E2%86%92+ALERT;Network+Intrusion+Detection;SOC-Style+Security+Monitoring;Packets+%E2%80%A2+Flows+%E2%80%A2+Correlation+%E2%80%A2+Incidents" alt="Typing animation" />
+
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/React-Dashboard-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![Scapy](https://img.shields.io/badge/Scapy-Packets-00D9FF?style=for-the-badge)](https://scapy.net/)
 
-### 🛰️ Telemetry → Detection → Risk → Alert
+### 🛰️ Network Visibility → Detection → Investigation
 
 **A Python/FastAPI network intrusion detection and monitoring platform for SOC-style security workflows.**
 
@@ -136,7 +138,7 @@ This is a portfolio/educational IDS. Do not deploy it as a replacement for matur
 
 <div align="center">
 
-### 🛡️ Detect the signal. Understand the threat. Defend the network.
+### 🛡️ DETECT THE SIGNAL · UNDERSTAND THE THREAT · DEFEND THE NETWORK
 
 **Built by Sahil Chand**
 
