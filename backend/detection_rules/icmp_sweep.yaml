@@ -1,0 +1,46 @@
+rule_id: "SCAN_002"
+name: "ICMP Sweep Detection"
+description: "Detects potential ICMP host discovery sweeps based on rapid ICMP echo requests to multiple destinations"
+category: "reconnaissance"
+severity: "MEDIUM"
+enabled: true
+
+mitre_attack:
+  tactic: "Discovery"
+  technique: "T1018"
+  technique_name: "Remote System Discovery"
+
+detection_logic:
+  type: "threshold"
+  conditions:
+    - metric: "unique_dst_hosts_per_src"
+      threshold: 20
+      time_window: 30
+    - metric: "icmp_echo_request_ratio"
+      threshold: 0.8
+    - metric: "request_response_ratio"
+      threshold: 2.0
+
+evidence_collection:
+  - src_ip
+  - dst_ip
+  - contacted_hosts
+  - packet_timestamps
+  - icmp_type
+  - icmp_code
+
+confidence_calculation:
+  base: 65
+  modifiers:
+    - condition: "hosts_contacted > 50"
+      adjustment: 15
+    - condition: "sequential_destination_ips"
+      adjustment: 10
+    - condition: "low_response_ratio"
+      adjustment: 10
+
+response:
+  alert: true
+  block: false
+  correlate: true
+  cooldown: 300
