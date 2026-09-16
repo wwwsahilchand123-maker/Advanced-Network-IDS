@@ -26,7 +26,7 @@ Advanced Network IDS is designed for learning and authorized lab environments. I
 ## ✨ Detection & SOC Capabilities
 
 - 📡 Real-time packet capture and flow tracking with Scapy
-- 🔎 Port-scan, brute-force, ARP-spoofing, DNS and traffic-anomaly detection
+- 🔎 Port-scan, brute-force, ARP-spoofing, DNS, ICMP sweep and traffic-anomaly detection
 - 🧩 Event correlation and incident / attack-chain analysis
 - 📊 Explainable 0–100 risk scoring
 - 🎯 MITRE ATT&CK technique mapping
@@ -92,7 +92,11 @@ API docs normally run at `http://localhost:8000/api/v1/docs` and the Vite fronte
 
 ## 🔍 Detection Modules
 
-`Port Scan` · `Brute Force` · `ARP Spoofing` · `DNS Anomaly` · `Traffic Anomaly` · `Suspicious Traffic` · `Event Correlation`
+`Port Scan` · `ICMP Sweep` · `Brute Force` · `ARP Spoofing` · `DNS Anomaly` · `Traffic Anomaly` · `Suspicious Traffic` · `Event Correlation`
+
+### ICMP Sweep Detection
+
+The IDS includes a threshold-based ICMP host-discovery rule that looks for rapid echo requests from one source across multiple destinations. The rule records source/destination evidence, timestamps and ICMP metadata, then calculates confidence using additional behavioral signals such as sequential destination addresses and low response ratios. It alerts and correlates the event without automatically blocking traffic. fileciteturn106file0
 
 Detection thresholds should be tuned to the monitored environment. Detection results are indicators and should be investigated before response actions.
 
@@ -117,10 +121,16 @@ Advanced-Network-IDS/
 │   │   ├── models/
 │   │   ├── services/
 │   │   └── main.py
+│   ├── detection_rules/
+│   │   ├── arp_spoofing.yaml
+│   │   ├── brute_force.yaml
+│   │   ├── dns_anomaly.yaml
+│   │   ├── icmp_sweep.yaml
+│   │   ├── port_scan.yaml
+│   │   └── ...
 │   ├── alembic/
 │   └── requirements.txt
 ├── frontend/
-├── detection_rules/
 ├── TESTING_GUIDE.md
 ├── .env.example
 └── README.md
