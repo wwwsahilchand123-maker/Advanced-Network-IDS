@@ -1,0 +1,30 @@
+# Example configuration for a lab environment.
+# Tune thresholds to the monitored network before enabling.
+rule_id: "SCAN_002_EXAMPLE"
+name: "ICMP Sweep Detection Example"
+description: "Example threshold configuration for detecting rapid ICMP host discovery"
+category: "reconnaissance"
+severity: "MEDIUM"
+enabled: false
+
+mitre_attack:
+  tactic: "Discovery"
+  technique: "T1018"
+  technique_name: "Remote System Discovery"
+
+detection_logic:
+  type: "threshold"
+  conditions:
+    - metric: "unique_dst_hosts_per_src"
+      threshold: 20
+      time_window: 30
+    - metric: "icmp_echo_request_ratio"
+      threshold: 0.8
+    - metric: "request_response_ratio"
+      threshold: 2.0
+
+response:
+  alert: true
+  block: false
+  correlate: true
+  cooldown: 300
