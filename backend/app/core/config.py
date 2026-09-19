@@ -1,10 +1,7 @@
-"""Application configuration.
-
-All sensitive and environment-specific values are read from environment
-variables. Safe development defaults are provided, but production should
-always supply its own values through .env or the deployment environment.
-"""
+"""Application configuration with safe validation for deployments."""
 from typing import List, Optional
+
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -24,7 +21,6 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite:///./ids.db"
     REDIS_URL: str = "redis://localhost:6379/0"
 
-    # Never use the placeholder value in production. Set a random 32+ byte key.
     SECRET_KEY: str = "CHANGE_ME_IN_ENVIRONMENT"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
@@ -66,6 +62,18 @@ class Settings(BaseSettings):
         case_sensitive=True,
         extra="ignore",
     )
+
+    @model_validator(mode="after")
+    def validate_runtime_secrets(self):
+        """Prevent placeholder credentials from being used outside local development."""
+        if self.ENVIRONMENT.lower() != "development":
+            if self.SECRET_KEY == "CHANGE_ME_IN_ENVIRONMENT":
+                raise ValueError("SECRET_KEY must be set outside development")
+            if self.ADMIN_PASSWORD == "CHANGE_ME_IN_ENVIRONMENT":
+                raise ValueError("ADMIN_PASSWORD must be set outside development")
+            if len(self.SECRET_KEY) < 32:
+                raise ValueError("SECRET_KEY must contain at least 32 characters")
+        return self
 
 
 settings = Settings()
