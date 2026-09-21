@@ -136,9 +136,17 @@ Advanced-Network-IDS/
 └── README.md
 ```
 
+## 🧪 Detection Rule Development
+
+Detection rules live under `backend/detection_rules/`. When adding or tuning a rule, document its trigger conditions, evidence fields and expected false-positive cases. Validate the rule against both matching and benign traffic before changing severity or response behavior.
+
+```text
+rule change → positive test → negative test → review → deploy
+```
+
 ## 🔐 Security
 
-Keep secrets in `.env`, use strong credentials, restrict CORS, and monitor only networks you own or are explicitly authorized to monitor.
+Keep secrets in `.env`, use strong credentials, restrict CORS, and monitor only networks you own or are explicitly authorized to monitor. Treat captured packets and generated reports as sensitive data.
 
 ## ⚠️ Disclaimer
 
