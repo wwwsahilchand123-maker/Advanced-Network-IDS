@@ -12,3 +12,7 @@ Do not publish credentials, private packet captures, personal data, or exploit d
 - Treat captured packets, uploaded PCAPs, and generated reports as sensitive data.
 - Review CORS, authentication, and authorization settings before exposing the API beyond a local lab.
 - Validate and sanitize untrusted network input before processing or storing it.
+
+## Detection-rule changes
+
+New detection rules should document the trigger, evidence fields, severity rationale and expected false-positive conditions. Add positive and negative test coverage where practical, and prefer alerting/correlation over automatic blocking unless the behavior has been explicitly reviewed for the target environment.
