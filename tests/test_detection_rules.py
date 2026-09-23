@@ -32,3 +32,24 @@ def test_detection_rules_have_unique_ids_and_safe_response_defaults():
                 f"Detection rules must not block automatically: {rule['rule_id']}"
             )
             assert response.get("cooldown", 0) > 0, f"Missing cooldown: {rule['rule_id']}"
+
+
+def test_threshold_rules_use_positive_numeric_limits_and_windows():
+    for path in sorted(RULES_DIR.glob("*.yaml")):
+        for rule in load_documents(path):
+            logic = rule.get("detection_logic", {})
+            if logic.get("type") != "threshold":
+                continue
+
+            conditions = logic.get("conditions", [])
+            assert conditions, f"Threshold rule has no conditions: {rule['rule_id']}"
+            for condition in conditions:
+                threshold = condition.get("threshold")
+                assert isinstance(threshold, (int, float)) and threshold > 0, (
+                    f"Invalid threshold in {rule['rule_id']}"
+                )
+                if "time_window" in condition:
+                    window = condition["time_window"]
+                    assert isinstance(window, (int, float)) and window > 0, (
+                        f"Invalid time_window in {rule['rule_id']}"
+                    )
