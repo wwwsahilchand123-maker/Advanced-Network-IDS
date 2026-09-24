@@ -53,3 +53,27 @@ def test_threshold_rules_use_positive_numeric_limits_and_windows():
                     assert isinstance(window, (int, float)) and window > 0, (
                         f"Invalid time_window in {rule['rule_id']}"
                     )
+
+def test_confidence_calculation_stays_within_valid_range():
+    for path in sorted(RULES_DIR.glob("*.yaml")):
+        for rule in load_documents(path):
+            confidence = rule.get("confidence_calculation")
+            if not confidence:
+                continue
+
+            base = confidence.get("base")
+            assert isinstance(base, (int, float)) and 0 <= base <= 100, (
+                f"Invalid confidence base in {rule['rule_id']}"
+            )
+
+            total_adjustment = 0
+            for modifier in confidence.get("modifiers", []):
+                adjustment = modifier.get("adjustment")
+                assert isinstance(adjustment, (int, float)), (
+                    f"Invalid confidence adjustment in {rule['rule_id']}"
+                )
+                total_adjustment += adjustment
+
+            assert base + total_adjustment <= 100, (
+                f"Confidence range can exceed 100 in {rule['rule_id']}"
+            )
