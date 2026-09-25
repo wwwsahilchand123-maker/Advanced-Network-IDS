@@ -161,3 +161,36 @@ This is a portfolio/educational IDS. Do not deploy it as a replacement for matur
 **Built by Sahil Chand**
 
 </div>
+
+---
+
+## 🛡️ Detection Engineering
+
+Detection rules live under `backend/detection_rules/`. A safe rule-development workflow is:
+
+```text
+rule change
+    ↓
+configuration validation
+    ↓
+positive detection test
+    ↓
+negative / benign-traffic test
+    ↓
+false-positive review
+    ↓
+deploy
+```
+
+Thresholds, confidence values and time windows should be validated before a rule is accepted. Alerts are investigation signals and should not automatically be treated as confirmed incidents.
+
+### Documentation
+- [Product Requirements](docs/PRD.md)
+- [Detection Pipeline](docs/DETECTION_PIPELINE.md)
+
+Run the backend test suite after detection-rule changes:
+
+```bash
+cd backend
+pytest
+```
